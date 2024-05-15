@@ -1,0 +1,21 @@
+import requests
+
+# YOUR BOT TOKEN
+TOKEN = '1234567890:ABCDEfghijKLMNopqrSTUvwxYZ1234567890'
+
+url = f"https://api.telegram.org/bot{TOKEN}/getUpdates"
+
+response = requests.get(url)
+
+if response.status_code == 200:
+    updates = response.json()
+    if updates["ok"]:
+        if "result" in updates and len(updates["result"]) > 0:
+            chat_id = updates["result"][0]["message"]["chat"]["id"]
+            print(f"Chat ID: {chat_id}")
+        else:
+            print("No messages found.")
+    else:
+        print("Error: Unable to get updates.")
+else:
+    print(f"Error: {response.status_code}")
